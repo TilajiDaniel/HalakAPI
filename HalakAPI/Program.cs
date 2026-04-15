@@ -10,6 +10,7 @@ namespace HalakAPI
 
             builder.Services.AddControllers()
                 .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            builder.Services.AddDbContext<Models.HalakContext>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -28,7 +29,7 @@ namespace HalakAPI
                 app.UseSwaggerUI();
             }
 
-            app.UseCors("AllowOrigin");  
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
             app.UseAuthorization();

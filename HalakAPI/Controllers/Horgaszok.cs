@@ -7,8 +7,8 @@ namespace HalakAPI.Controllers
     [Route("[controller]")]
     public class Horgaszok : ControllerBase
     {
-        public HalakAPI.Models.HalakContext _context;
-        public Horgaszok(HalakAPI.Models.HalakContext context)
+        public readonly HalakContext _context;
+        public Horgaszok(HalakContext context)
         {
             _context = context;
         }
@@ -35,7 +35,7 @@ namespace HalakAPI.Controllers
                 var horgasz = _context.Horgaszoks.Where(x => x.Id == id).FirstOrDefault();
                 if (horgasz == null)
                 {
-                    return NotFound("Nincs ilyen azonosítójú horgász!"); // 404 Not Found [cite: 23]
+                    return NotFound("Nincs ilyen azonosítójú horgász!");
                 }
                 return Ok(horgasz);
             }

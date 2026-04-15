@@ -2,6 +2,7 @@ using HalakAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using HalakAPI.Models;
 
 namespace HalakAPI.Controllers
 {
@@ -9,8 +10,8 @@ namespace HalakAPI.Controllers
     [Route("[controller]")]
     public class Halak : ControllerBase
     {
-        public readonly HalakAPI.Models.HalakContext _context;
-        public Halak(HalakAPI.Models.HalakContext context)
+        public readonly HalakContext _context;
+        public Halak(HalakContext context)
         {
             _context = context;
         }
@@ -37,7 +38,7 @@ namespace HalakAPI.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Add(HalakAPI.Models.Halak halak)
+        public IActionResult Add(Models.Halak halak)
         {
             if (halak == null)
                 return BadRequest("Üres objektum nem rögzíthetõ!");
@@ -54,14 +55,14 @@ namespace HalakAPI.Controllers
             }
         }
         [HttpPut]
-        public async Task<IActionResult> Update(HalakAPI.Models.Halak halak)
+        public async Task<IActionResult> Update(Models.Halak halak)
         {
             try
             {
                 var letezik = await _context.Halaks.AnyAsync(h => h.Id == halak.Id);
                 if (!letezik)
                 {
-                    return NotFound("Nincs ilyen azonosítójú hal!"); // 404 Not Found [cite: 30]
+                    return NotFound("Nincs ilyen azonosítójú hal!"); 
                 }
 
                 _context.Entry(halak).State = EntityState.Modified;
